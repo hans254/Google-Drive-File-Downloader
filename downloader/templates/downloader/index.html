@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download from Google Drive</title>
+</head>
+<body>
+    <h1>Download from Google Drive</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Download</button>
+    </form>
+</body>
+</html>

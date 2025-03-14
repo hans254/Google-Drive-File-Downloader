@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Download Successful</title>
+</head>
+<body>
+    <h1>Files downloaded successfully!</h1>
+    <ul>
+        {% if file_paths %}
+            {% for file_path in file_paths %}
+                <li>{{ file_path }}</li>
+            {% endfor %}
+        {% else %}
+            <li>{{ file_path }}</li>
+        {% endif %}
+    </ul>
+    <p>Files saved in: {{ destination_folder }}</p>
+</body>
+</html>
