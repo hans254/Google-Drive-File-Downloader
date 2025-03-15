@@ -5,5 +5,5 @@ class GoogleDriveForm(forms.Form):
     destination_folder = forms.CharField(
         label='Destination Folder',
         required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'Enter the full path to the destination folder'})
+        widget=forms.HiddenInput()  # Hide this field from the user
     )

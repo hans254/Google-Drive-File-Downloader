@@ -1,4 +1,4 @@
-#!/home/hansel/Desktop/drive_downloader/hans/bin/python3
+#!/home/hansel/Desktop/drive_downloader/hans/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys

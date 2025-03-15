@@ -8,7 +8,26 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+        <button type="button" onclick="selectFolder()">Choose Destination Folder</button>
+        <p id="folder-path">No folder selected</p>
         <button type="submit">Download</button>
     </form>
+
+    <script>
+        async function selectFolder() {
+            // Call the Django view to open the folder selection dialog
+            const response = await fetch('/select-folder/');
+            const data = await response.json();
+
+            if (data.folder_path) {
+                // Set the selected folder path in the hidden input field
+                document.getElementById('id_destination_folder').value = data.folder_path;
+                // Display the selected folder path to the user
+                document.getElementById('folder-path').innerText = `Selected Folder: ${data.folder_path}`;
+            } else {
+                alert(data.error || 'An error occurred while selecting the folder.');
+            }
+        }
+    </script>
 </body>
 </html>

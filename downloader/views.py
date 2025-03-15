@@ -4,6 +4,9 @@ from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaIoBaseDownload
+from django.http import JsonResponse
+from tkinter import Tk
+from tkinter.filedialog import askdirectory
 from io import FileIO
 import os
 import re
@@ -41,7 +44,6 @@ def extract_file_or_folder_id(url):
 
     # If no match is found, raise an error
     raise ValueError("Invalid Google Drive URL. Could not extract file or folder ID.")
-
 
 def download_file_from_google_drive(file_id, destination_folder):
     """Download a file from Google Drive using its file ID."""
@@ -101,9 +103,6 @@ def download_view(request):
                 # Extract the ID and type (file or folder)
                 resource_id, resource_type = extract_file_or_folder_id(drive_url)
 
-                # Create the destination folder if it doesn't exist
-                os.makedirs(destination_folder, exist_ok=True)
-
                 if resource_type == 'file':
                     # Download a single file
                     file_path = download_file_from_google_drive(resource_id, destination_folder)
@@ -123,3 +122,16 @@ def download_view(request):
     else:
         form = GoogleDriveForm()
     return render(request, 'downloader/index.html', {'form': form})
+
+def select_folder(request):
+    if request.method == 'GET':
+        # Open a folder selection dialog
+        root = Tk()
+        root.withdraw()  # Hide the root window
+        folder_path = askdirectory(title="Select Destination Folder")
+        root.destroy()
+
+        if folder_path:
+            return JsonResponse({'folder_path': folder_path})
+        else:
+            return JsonResponse({'error': 'No folder selected'}, status=400)
